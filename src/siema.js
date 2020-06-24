@@ -58,6 +58,7 @@ export default class Siema {
       rtl: false,
       onInit: () => {},
       onChange: () => {},
+      onCloneItem: () => {},
     };
 
     const userSttings = options;
@@ -175,7 +176,9 @@ export default class Siema {
     // Loop through the slides, add styling and add them to document fragment
     if (this.config.loop) {
       for (let i = this.innerElements.length - this.perPage; i < this.innerElements.length; i++) {
-        const element = this.buildSliderFrameItem(this.innerElements[i].cloneNode(true));
+        const clone = this.innerElements[i].cloneNode(true);
+        this.config.onCloneItem.call(this, clone, i);
+        const element = this.buildSliderFrameItem(clone);
         docFragment.appendChild(element);
       }
     }
@@ -185,7 +188,9 @@ export default class Siema {
     }
     if (this.config.loop) {
       for (let i = 0; i < this.perPage; i++) {
-        const element = this.buildSliderFrameItem(this.innerElements[i].cloneNode(true));
+        const clone = this.innerElements[i].cloneNode(true);
+        this.config.onCloneItem.call(this, clone, i);
+        const element = this.buildSliderFrameItem(clone);
         docFragment.appendChild(element);
       }
     }
