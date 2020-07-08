@@ -258,7 +258,12 @@ export default class Siema {
         const offset = (this.config.rtl ? 1 : -1) * moveTo * (this.selectorWidth / this.perPage);
         const dragDistance = this.config.draggable ? this.drag.endX - this.drag.startX : 0;
 
-        this.sliderFrame.style[this.transformProperty] = `translate3d(${offset + dragDistance}px, 0, 0)`;
+        let translateOffset = offset + dragDistance;
+        if (this.config.loop) {
+          translateOffset = Math.min(translateOffset, 0);
+        }
+
+        this.sliderFrame.style[this.transformProperty] = `translate3d(${translateOffset}px, 0, 0)`;
         this.currentSlide = mirrorSlideIndex - howManySlides;
       }
       else {
@@ -303,7 +308,12 @@ export default class Siema {
         const offset = (this.config.rtl ? 1 : -1) * moveTo * (this.selectorWidth / this.perPage);
         const dragDistance = this.config.draggable ? this.drag.endX - this.drag.startX : 0;
 
-        this.sliderFrame.style[this.transformProperty] = `translate3d(${offset + dragDistance}px, 0, 0)`;
+        let translateOffset = offset + dragDistance;
+        if (this.config.loop) {
+          translateOffset = Math.min(translateOffset, 0);
+        }
+
+        this.sliderFrame.style[this.transformProperty] = `translate3d(${translateOffset}px, 0, 0)`;
         this.currentSlide = mirrorSlideIndex + howManySlides;
       }
       else {
