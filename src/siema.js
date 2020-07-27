@@ -174,7 +174,7 @@ export default class Siema {
     const docFragment = document.createDocumentFragment();
 
     // Loop through the slides, add styling and add them to document fragment
-    if (this.config.loop && this.innerElements.length) {
+    if (this.config.loop && (this.innerElements.length >= this.perPage)) {
       for (let i = this.innerElements.length - this.perPage; i < this.innerElements.length; i++) {
         const clone = this.innerElements[i].cloneNode(true);
         this.config.onCloneItem.call(this, clone, i);
@@ -186,7 +186,7 @@ export default class Siema {
       const element = this.buildSliderFrameItem(this.innerElements[i]);
       docFragment.appendChild(element);
     }
-    if (this.config.loop && this.innerElements.length) {
+    if (this.config.loop && (this.innerElements.length >= this.perPage)) {
       for (let i = 0; i < this.perPage; i++) {
         const clone = this.innerElements[i].cloneNode(true);
         this.config.onCloneItem.call(this, clone, i);
@@ -215,9 +215,8 @@ export default class Siema {
     return elementContainer;
   }
 
-
   /**
-   * Determinates slides number accordingly to clients viewport.
+   * Determine slides number accordingly to clients viewport.
    */
   resolveSlidesNumber() {
     if (typeof this.config.perPage === 'number') {
